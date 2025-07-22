@@ -1,31 +1,33 @@
 import React, { useState } from 'react';
 import './App.css';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import Canvas from './components/Canvas';
-import StatusBar from './components/StatusBar';
+import Header from './components/Header.jsx';
+import Sidebar from './components/Sidebar.jsx';
+import Canvas from './components/Canvas.jsx';
+import StatusBar from './components/StatusBar.jsx';
 
 function App() {
   const [paintingTitle, setPaintingTitle] = useState('Painting Title');
   const [shapes, setShapes] = useState([]);
   const [selectedTool, setSelectedTool] = useState(null);
 
-  const addShape = (x, y) => {
-    if (!selectedTool) return;
+  const addShape = (x, y, toolType = null, customSize = null) => {
+    const shapeType = toolType || selectedTool;
+    if (!shapeType) return;
 
+    const size = customSize || 50;
     const newShape = {
-      id: Date.now(),
-      type: selectedTool,
-      x: x - 25, // Center the shape
-      y: y - 25,
-      size: 50
+      id: Date.now() + Math.random(), // Ensure unique ID
+      type: shapeType,
+      x: customSize ? x - size/2 : x - 25, // Center the shape
+      y: customSize ? y - size/2 : y - 25,
+      size: size
     };
 
-    setShapes([...shapes, newShape]);
+    setShapes(prevShapes => [...prevShapes, newShape]);
   };
 
   const removeShape = (id) => {
-    setShapes(shapes.filter(shape => shape.id !== id));
+    setShapes(prevShapes => prevShapes.filter(shape => shape.id !== id));
   };
 
   const exportPainting = () => {

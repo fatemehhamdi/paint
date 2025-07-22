@@ -15,5 +15,15 @@
     border-radius: 8px;
     position: relative;
     overflow: hidden;
+    transition: border-color 0.2s;
+    user-select: none;
+  }
+  
+  .canvas:hover {
+    border-color: #007bff;
+  }
+  
+  .canvas.drawing {
+    border-color: #28a745;
   }
   
