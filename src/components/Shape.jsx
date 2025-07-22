@@ -14,7 +14,7 @@ const Shape = ({ shape, onRemove, isTemporary = false }) => {
   if (shape.type === 'pencil') {
     const pathData = shape.path || '';
     const strokeColor = isTemporary ? 'rgba(220, 53, 69, 0.8)' : '#6f42c1';
-    
+
     return (
       <svg
         className={`shape pencil ${isTemporary ? 'temporary' : ''}`}
@@ -24,12 +24,10 @@ const Shape = ({ shape, onRemove, isTemporary = false }) => {
           top: 0,
           width: '100%',
           height: '100%',
-          pointerEvents: isTemporary ? 'none' : 'all',
-          cursor: isTemporary ? 'crosshair' : 'pointer',
+          pointerEvents: 'none', // SVG container doesn't capture events
           opacity: isTemporary ? 0.8 : 1,
           zIndex: isTemporary ? 1000 : 1
         }}
-        onDoubleClick={handleDoubleClick}
         title={isTemporary ? '' : 'Double-click to delete'}
       >
         <path
@@ -39,6 +37,11 @@ const Shape = ({ shape, onRemove, isTemporary = false }) => {
           fill="none"
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={{
+            pointerEvents: isTemporary ? 'none' : 'stroke', // Only the drawn line captures events
+            cursor: isTemporary ? 'crosshair' : 'pointer'
+          }}
+          onDoubleClick={handleDoubleClick} // Event handler moved to path element
         />
       </svg>
     );
@@ -75,7 +78,7 @@ const Shape = ({ shape, onRemove, isTemporary = false }) => {
           {...commonProps}
         />
       );
-    
+
     case 'rectangle':
       return (
         <div
@@ -90,7 +93,7 @@ const Shape = ({ shape, onRemove, isTemporary = false }) => {
           {...commonProps}
         />
       );
-    
+
     case 'triangle':
       return (
         <div
@@ -111,7 +114,7 @@ const Shape = ({ shape, onRemove, isTemporary = false }) => {
           {...commonProps}
         />
       );
-    
+
     default:
       return null;
   }
