@@ -17,28 +17,28 @@
 برای geometric shapes، سایز بر اساس distance بین نقطه شروع و موقعیت فعلی mouse محاسبه می‌شود. اما برای pencil، یک SVG path می‌سازد که از تمام نقاط عبوری mouse تشکیل شده است.
 
 ### Shape.jsx - Rendering Engine
-هر نوع shape با technique متفاوتی render می‌شود. دایره‌ها با یک div که border-radius 50% دارد ساخته می‌شوند. مربع‌ها فقط یک div معمولی با background color هستند. مثلث‌ها با استفاده از CSS border tricks ساخته می‌شوند که یک روش معمول و clever است. pencil strokes هم به صورت SVG path نمایش داده می‌شوند تا خطوط smooth و curved باشند.
+هر نوع shape با تکنیک متفاوتی render می‌شود. دایره‌ها با یک div که border-radius 50% دارد ساخته می‌شوند. مربع‌ها فقط یک div معمولی با background color هستند. مثلث‌ها با استفاده از CSS border tricks ساخته می‌شوند.pencil strokes هم به صورت SVG path نمایش داده می‌شوند تا خطوط به صورت دلخواه (صاف یا منحنی) قابل کشیدن باشند.
 
 هر shape یک double-click handler دارد که به App component می‌گوید این shape را حذف کند. با stopPropagation مطمئن می‌شویم که events بین shapes مختلف با هم تداخل نکنند.
 
 ### Supporting Components
-Sidebar یک tool picker ساده است که وقتی tool عوض می‌شود، visual feedback می‌دهد و cursor canvas را هم تغییر می‌دهد. StatusBar تعداد هر نوع shape را real-time نشان می‌دهد. Header شامل title قابل edit و دکمه‌های export/import است.
+نوار کناری یا Sidebar یک tool picker ساده است که وقتی tool عوض می‌شود، visual feedback می‌دهد و cursor را هم تغییر می‌دهد. StatusBar تعداد هر نوع shape را real-time نشان می‌دهد. Header شامل title قابل edit و دکمه‌های export/import است.
 
 ## 🔄 User Experience Flow
 
-وقتی کاربر یک tool انتخاب می‌کند، cursor canvas تغییر می‌کند تا نشان دهد چه کاری می‌شود انجام داد. برای geometric shapes، کاربر click و drag می‌کند تا سایز را تعیین کند. در حین drag، یک preview شفاف نشان داده می‌شود. وقتی mouse را release کرد، shape نهایی می‌شود.
+وقتی کاربر یک tool انتخاب می‌کند، cursor تغییر می‌کند تا نشان دهد چه کاری می‌شود انجام داد. برای geometric shapes، کاربر click و drag می‌کند تا سایز را تعیین کند. در حین drag، یک preview شفاف نشان داده می‌شود. وقتی mouse را release کرد، shape نهایی می‌شود.
 
 برای pencil tool، process یکم متفاوت است. با شروع drag، یک SVG path جدید شروع می‌شود و هر نقطه‌ای که mouse از آن رد می‌شود، به path اضافه می‌شود. این باعث می‌شود خطوط smooth و natural باشند.
 
-File management هم خیلی straightforward است. Export کل state فعلی را به یک JSON object تبدیل می‌کند که شامل title، shapes، و timestamp است. Import این process را reverse می‌کند و کل board را با data جدید replace می‌کند.
+مدیریت فایل یا File management هم پیچیدگی خاصی ندارد. Export کل state فعلی را به یک JSON object تبدیل می‌کند که شامل title، shapes، و timestamp است. Import این process را reverse می‌کند و کل board را با data جدید replace می‌کند.
 
 ## 🛠️ Technical Implementation
 
-Position calculation یکی از challenging parts بوده چون باید مطمئن شویم coordinates دقیق هستند. getBoundingClientRect استفاده می‌شود تا موقعیت canvas نسبت به viewport را پیدا کنیم.
+محاسبه موقعیت یا Position calculation یکی از challenging parts بوده چون باید مطمئن شویم coordinates دقیق هستند. getBoundingClientRect استفاده می‌شود تا موقعیت canvas نسبت به viewport را پیدا کنیم.
 
 برای performance، هر shape یک unique ID دارد که باعث efficient re-rendering می‌شود. همچنین functional updates در setState استفاده می‌شود تا از stale closures جلوگیری شود.
 
-User experience را بهتر کردیم با چیزهایی مثل تغییر cursor، transparent previews، و reset کردن file input بعد از import تا بشود همان file را دوباره import کرد.
+تجربه کاربری یا User experience را بهتر کردیم با چیزهایی مثل تغییر cursor، transparent previews، و reset کردن file input بعد از import تا بشود همان file را دوباره import کرد.
 
 ## 🎨 Visual Design
 
@@ -50,7 +50,7 @@ User experience را بهتر کردیم با چیزهایی مثل تغییر c
 
 موضوع positioning هم challenging بود. اول از corner-based positioning استفاده می‌کردیم که باعث می‌شد shapes در جاهای غیرمنتظره appear شوند. تغییر به center-based positioning نتیجه natural-تری داده است.
 
-State management برای import/export هم refinement لازم داشت. به جای merge کردن imported data با existing shapes، تصمیم گرفتیم کل state را replace کنیم که user experience بهتری می‌دهد.
+همچنین State management برای import/export هم نیازمند بررسی بود. به جای merge کردن imported data با existing shapes، تصمیم گرفتیم کل state را replace کنیم.
 
 ## 🤖 هوش مصنوعی
 
