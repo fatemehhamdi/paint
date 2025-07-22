@@ -10,18 +10,33 @@ function App() {
   const [shapes, setShapes] = useState([]);
   const [selectedTool, setSelectedTool] = useState(null);
 
-  const addShape = (x, y, toolType = null, customSize = null) => {
+  const addShape = (x, y, toolType = null, customSize = null, path = null) => {
     const shapeType = toolType || selectedTool;
     if (!shapeType) return;
 
-    const size = customSize || 50;
-    const newShape = {
-      id: Date.now() + Math.random(), // Ensure unique ID
-      type: shapeType,
-      x: customSize ? x - size/2 : x - 25, // Center the shape
-      y: customSize ? y - size/2 : y - 25,
-      size: size
-    };
+    let newShape;
+
+    if (shapeType === 'pencil') {
+      // For pencil shapes, we don't need x, y positioning or size
+      newShape = {
+        id: Date.now() + Math.random(),
+        type: 'pencil',
+        x: 0,
+        y: 0,
+        size: 0,
+        path: path || ''
+      };
+    } else {
+      // For geometric shapes
+      const size = customSize || 50;
+      newShape = {
+        id: Date.now() + Math.random(),
+        type: shapeType,
+        x: customSize ? x - size/2 : x - 25,
+        y: customSize ? y - size/2 : y - 25,
+        size: size
+      };
+    }
 
     setShapes(prevShapes => [...prevShapes, newShape]);
   };

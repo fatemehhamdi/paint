@@ -4,19 +4,11 @@ import './StatusBar.css';
 const StatusBar = ({ getShapeCount }) => {
   return (
     <div className="status-bar">
-      <div className="shape-counter">
-        <div className="counter-item">
-          <div className="counter-icon circle"></div>
-          <span>{getShapeCount('circle')}</span>
-        </div>
-        <div className="counter-item">
-          <div className="counter-icon rectangle"></div>
-          <span>{getShapeCount('rectangle')}</span>
-        </div>
-        <div className="counter-item">
-          <div className="counter-icon triangle"></div>
-          <span>{getShapeCount('triangle')}</span>
-        </div>
+      <div className="shape-count">
+        <span>●: {getShapeCount('circle')}</span>
+        <span>■: {getShapeCount('rectangle')}</span>
+        <span>▲: {getShapeCount('triangle')}</span>
+        <span>✏️: {getShapeCount('pencil')}</span>
       </div>
     </div>
   );

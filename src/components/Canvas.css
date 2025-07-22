@@ -1,29 +1,46 @@
 .canvas-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f9fa;
-    padding: 20px;
-  }
-  
-  .canvas {
-    width: 600px;
-    height: 400px;
-    background-color: white;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s;
-    user-select: none;
-  }
-  
-  .canvas:hover {
-    border-color: #007bff;
-  }
-  
-  .canvas.drawing {
-    border-color: #28a745;
-  }
-  
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #2a2a2a;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 2px solid #666;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.canvas.drawing {
+  cursor: crosshair;
+}
+
+.shape {
+  position: absolute;
+  transition: opacity 0.1s ease;
+}
+
+.shape.temporary {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.shape:hover:not(.temporary) {
+  opacity: 0.8;
+  /* Removed: transform: scale(1.05); */
+  transition: opacity 0.2s ease;
+}
+
+/* Ensure SVG pencil shapes fill the canvas */
+.shape.pencil {
+  width: 100% !important;
+  height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+}

@@ -1,69 +1,53 @@
 .sidebar {
-    width: 200px;
-    background-color: #f8f9fa;
-    border-left: 1px solid #ddd;
-    padding: 20px;
-  }
-  
-  .sidebar h3 {
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  .tools {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .tool {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    cursor: grab;
-    transition: all 0.2s;
-    user-select: none;
-  }
-  
-  .tool:hover {
-    background-color: #e9ecef;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .tool:active {
-    cursor: grabbing;
-  }
-  
-  .tool.selected {
-    border-color: #007bff;
-    background-color: #e3f2fd;
-  }
-  
-  .tool-icon {
-    width: 30px;
-    height: 30px;
-    border: 2px solid #333;
-  }
-  
-  .tool-icon.circle {
-    border-radius: 50%;
-    background-color: #007bff;
-  }
-  
-  .tool-icon.rectangle {
-    background-color: #28a745;
-  }
-  
-  .tool-icon.triangle {
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 30px solid #ffc107;
-    border-top: none;
-  }
-  
+  width: 100px;
+  background-color: #333;
+  border-left: 1px solid #666;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tool-btn {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #666;
+  background-color: #444;
+  color: white;
+  font-size: 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin: 0 auto;
+}
+
+.tool-btn:hover {
+  background-color: #555;
+  border-color: #888;
+  transform: scale(1.05);
+}
+
+.tool-btn.selected {
+  background-color: #007bff;
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.tool-btn.selected:hover {
+  background-color: #0056b3;
+}

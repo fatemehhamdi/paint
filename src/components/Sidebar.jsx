@@ -3,24 +3,25 @@ import './Sidebar.css';
 
 const Sidebar = ({ selectedTool, onToolSelect }) => {
   const tools = [
-    { type: 'circle', name: 'Circle' },
-    { type: 'rectangle', name: 'Rectangle' },
-    { type: 'triangle', name: 'Triangle' }
+    { type: 'circle', label: '●', name: 'Circle' },
+    { type: 'rectangle', label: '■', name: 'Rectangle' },
+    { type: 'triangle', label: '▲', name: 'Triangle' },
+    { type: 'pencil', label: '✏️', name: 'Pencil' }
   ];
 
   return (
     <div className="sidebar">
       <h3>Tools</h3>
       <div className="tools">
-        {tools.map((tool) => (
-          <div
+        {tools.map(tool => (
+          <button
             key={tool.type}
-            className={`tool ${selectedTool === tool.type ? 'selected' : ''}`}
+            className={`tool-btn ${selectedTool === tool.type ? 'selected' : ''}`}
             onClick={() => onToolSelect(tool.type)}
+            title={tool.name}
           >
-            <div className={`tool-icon ${tool.type}`}></div>
-            <span>{tool.name}</span>
-          </div>
+            {tool.label}
+          </button>
         ))}
       </div>
     </div>

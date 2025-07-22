@@ -1,46 +1,22 @@
 .status-bar {
-    background-color: #f0f0f0;
-    border-top: 1px solid #ddd;
-    padding: 10px 20px;
-  }
-  
-  .shape-counter {
-    display: flex;
-    gap: 30px;
-  }
-  
-  .counter-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .counter-icon {
-    width: 20px;
-    height: 20px;
-    border: 1px solid #333;
-  }
-  
-  .counter-icon.circle {
-    border-radius: 50%;
-    background-color: #007bff;
-  }
-  
-  .counter-icon.rectangle {
-    background-color: #28a745;
-  }
-  
-  .counter-icon.triangle {
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 20px solid #ffc107;
-    border-top: none;
-  }
-  
-  .counter-item span {
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
+  height: 40px;
+  background-color: #333;
+  border-top: 1px solid #666;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.shape-count {
+  display: flex;
+  gap: 30px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.shape-count span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}

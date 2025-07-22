@@ -7,11 +7,11 @@ const Canvas = ({ shapes, onAddShape, onRemoveShape, selectedTool }) => {
   const [currentShape, setCurrentShape] = useState(null);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const [hasDragged, setHasDragged] = useState(false);
+  const [pencilPath, setPencilPath] = useState('');
 
   const handleMouseDown = (e) => {
     if (!selectedTool) return;
     
-    // Get the actual click position regardless of what was clicked
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -20,16 +20,32 @@ const Canvas = ({ shapes, onAddShape, onRemoveShape, selectedTool }) => {
     setHasDragged(false);
     setStartPos({ x, y });
     
-    const newShape = {
-      id: `temp-${Date.now()}`,
-      type: selectedTool,
-      x: x,
-      y: y,
-      size: 10,
-      isTemporary: true
-    };
-    
-    setCurrentShape(newShape);
+    if (selectedTool === 'pencil') {
+      const pathStart = `M ${x} ${y}`;
+      setPencilPath(pathStart);
+      
+      const newShape = {
+        id: `temp-${Date.now()}`,
+        type: 'pencil',
+        x: 0,
+        y: 0,
+        path: pathStart,
+        isTemporary: true
+      };
+      
+      setCurrentShape(newShape);
+    } else {
+      const newShape = {
+        id: `temp-${Date.now()}`,
+        type: selectedTool,
+        x: x,
+        y: y,
+        size: 10,
+        isTemporary: true
+      };
+      
+      setCurrentShape(newShape);
+    }
   };
 
   const handleMouseMove = (e) => {
@@ -41,19 +57,29 @@ const Canvas = ({ shapes, onAddShape, onRemoveShape, selectedTool }) => {
     const currentX = e.clientX - rect.left;
     const currentY = e.clientY - rect.top;
     
-    const deltaX = Math.abs(currentX - startPos.x);
-    const deltaY = Math.abs(currentY - startPos.y);
-    const size = Math.max(deltaX, deltaY, 10);
-    
-    const x = Math.min(startPos.x, currentX);
-    const y = Math.min(startPos.y, currentY);
-    
-    setCurrentShape({
-      ...currentShape,
-      x,
-      y,
-      size
-    });
+    if (selectedTool === 'pencil') {
+      const newPath = `${pencilPath} L ${currentX} ${currentY}`;
+      setPencilPath(newPath);
+      
+      setCurrentShape({
+        ...currentShape,
+        path: newPath
+      });
+    } else {
+      const deltaX = Math.abs(currentX - startPos.x);
+      const deltaY = Math.abs(currentY - startPos.y);
+      const size = Math.max(deltaX, deltaY, 10);
+      
+      const x = Math.min(startPos.x, currentX);
+      const y = Math.min(startPos.y, currentY);
+      
+      setCurrentShape({
+        ...currentShape,
+        x,
+        y,
+        size
+      });
+    }
   };
 
   const handleMouseUp = (e) => {
@@ -61,20 +87,24 @@ const Canvas = ({ shapes, onAddShape, onRemoveShape, selectedTool }) => {
     
     setIsDrawing(false);
     
-    if (hasDragged && currentShape.size > 15) {
-      const finalShape = {
-        id: Date.now(),
-        type: currentShape.type,
-        x: currentShape.x,
-        y: currentShape.y,
-        size: currentShape.size
-      };
-      
-      onAddShape(finalShape.x + finalShape.size/2, finalShape.y + finalShape.size/2, finalShape.type, finalShape.size);
+    if (hasDragged) {
+      if (selectedTool === 'pencil') {
+        // Create pencil shape with path
+        onAddShape(0, 0, 'pencil', 0, pencilPath);
+      } else if (currentShape.size > 15) {
+        // Create geometric shape
+        onAddShape(
+          currentShape.x + currentShape.size/2, 
+          currentShape.y + currentShape.size/2, 
+          currentShape.type, 
+          currentShape.size
+        );
+      }
     }
     
     setCurrentShape(null);
     setHasDragged(false);
+    setPencilPath('');
   };
 
   const handleMouseLeave = () => {
@@ -82,6 +112,7 @@ const Canvas = ({ shapes, onAddShape, onRemoveShape, selectedTool }) => {
       setIsDrawing(false);
       setCurrentShape(null);
       setHasDragged(false);
+      setPencilPath('');
     }
   };
 
