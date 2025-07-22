@@ -1,0 +1,19 @@
+.canvas-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .canvas {
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  

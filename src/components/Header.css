@@ -1,0 +1,50 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .title-input {
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px;
+  }
+  
+  .title-input:focus {
+    background-color: white;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+  }
+  
+  .header-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .export-btn,
+  .import-btn {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .export-btn:hover,
+  .import-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .import-btn {
+    display: inline-block;
+    text-align: center;
+  }
+  

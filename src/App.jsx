@@ -1,35 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import './App.css';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Canvas from './components/Canvas';
+import StatusBar from './components/StatusBar';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [paintingTitle, setPaintingTitle] = useState('Painting Title');
+  const [shapes, setShapes] = useState([]);
+  const [selectedTool, setSelectedTool] = useState(null);
+
+  const addShape = (x, y) => {
+    if (!selectedTool) return;
+
+    const newShape = {
+      id: Date.now(),
+      type: selectedTool,
+      x: x - 25, // Center the shape
+      y: y - 25,
+      size: 50
+    };
+
+    setShapes([...shapes, newShape]);
+  };
+
+  const removeShape = (id) => {
+    setShapes(shapes.filter(shape => shape.id !== id));
+  };
+
+  const exportPainting = () => {
+    const data = {
+      title: paintingTitle,
+      shapes: shapes
+    };
+    const jsonString = JSON.stringify(data, null, 2);
+    
+    // Create downloadable file
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${paintingTitle}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const importPainting = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          setPaintingTitle(data.title || 'Imported Painting');
+          setShapes(data.shapes || []);
+        } catch (error) {
+          alert('Invalid JSON file');
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const getShapeCount = (shapeType) => {
+    return shapes.filter(shape => shape.type === shapeType).length;
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      <Header
+        title={paintingTitle}
+        onTitleChange={setPaintingTitle}
+        onExport={exportPainting}
+        onImport={importPainting}
+      />
+      <div className="main-content">
+        <Canvas
+          shapes={shapes}
+          onAddShape={addShape}
+          onRemoveShape={removeShape}
+          selectedTool={selectedTool}
+        />
+        <Sidebar
+          selectedTool={selectedTool}
+          onToolSelect={setSelectedTool}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <StatusBar getShapeCount={getShapeCount} />
+    </div>
+  );
 }
 
-export default App
+export default App;

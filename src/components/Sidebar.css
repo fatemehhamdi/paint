@@ -1,0 +1,62 @@
+.sidebar {
+    width: 200px;
+    background-color: #f8f9fa;
+    border-left: 1px solid #ddd;
+    padding: 20px;
+  }
+  
+  .sidebar h3 {
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .tools {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .tool {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .tool:hover {
+    background-color: #e9ecef;
+  }
+  
+  .tool.selected {
+    border-color: #007bff;
+    background-color: #e3f2fd;
+  }
+  
+  .tool-icon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #333;
+  }
+  
+  .tool-icon.circle {
+    border-radius: 50%;
+    background-color: #007bff;
+  }
+  
+  .tool-icon.rectangle {
+    background-color: #28a745;
+  }
+  
+  .tool-icon.triangle {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 30px solid #ffc107;
+    border-top: none;
+  }
+  
